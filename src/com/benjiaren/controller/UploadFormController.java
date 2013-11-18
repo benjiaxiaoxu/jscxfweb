@@ -43,8 +43,9 @@ public class UploadFormController {
         Log.log("upload"+file.getName());
         try {
         	String uuid = UUID.randomUUID().toString();
-        	String fileName = uuid+originalFileName;
-        	
+        	String type = originalFileName.substring(originalFileName.lastIndexOf("."));
+        	String fileName = uuid+type;
+        	Log.log("upload------------------------------"+fileName);
             FileOutputStream fileOutputStream=new FileOutputStream(file+File.separator+fileName);
             fileOutputStream.write(multipartFile.getBytes());
             fileOutputStream.flush();
@@ -58,7 +59,7 @@ public class UploadFormController {
             pic.setPicNameNew(fileName);
             pic.setUuid(uuid);
             new PicDAO().insertPic(pic);
-            
+            request.setAttribute("pic", pic);
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
 			this.getLog(e.getMessage());

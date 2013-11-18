@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import com.benjiaren.bean.Geo;
 import com.benjiaren.bean.JiongShi;
+import com.benjiaren.bean.Pic;
 import com.benjiaren.bean.User;
 import com.benjiaren.util.DBConn;
 import com.benjiaren.util.Null;
@@ -48,16 +49,11 @@ public class JiongShiDAO {
 				js.setComments_count(rs.getInt("comments_count"));
 				js.setAttitudes_count(rs.getInt("attitudes_count"));
 				js.setMievel(rs.getInt("mievel"));
-//				String tem = rs.getString("pic_urls");
-//				
-//				String[] tems = tem.split(",");
-//				
-//				List<String> tt = new ArrayList<String>();
-//				for(int i = 0 ; i < tems.length ; i++){
-//					tt.add(tems[i]);
-//				}
-//				System.out.println(tt.size());
-//				js.setPic_urls(tt);
+				List<Pic> piclist = new PicDAO().getListPic(rs.getInt("jsid"));
+				if(piclist.size() > 0){
+				js.setPic_urls(piclist);
+				}
+				
 				list.add(js);
 			}
 		}catch (SQLException e) {

@@ -19,7 +19,7 @@ public class JiongShi {
 	private int comments_count;
 	private int attitudes_count;
 	private int mievel;
-	private List<String> pic_urls;
+	private List<Pic> pic_urls;
 	private List<Comments> comments;
 	
 	public Date getCreated_at() {
@@ -88,10 +88,10 @@ public class JiongShi {
 	public void setMievel(int mievel) {
 		this.mievel = mievel;
 	}
-	public List<String> getPic_urls() {
+	public List<Pic> getPic_urls() {
 		return pic_urls;
 	}
-	public void setPic_urls(List<String> pic_urls) {
+	public void setPic_urls(List<Pic> pic_urls) {
 		this.pic_urls = pic_urls;
 	}
 	public List<Comments> getComments() {
