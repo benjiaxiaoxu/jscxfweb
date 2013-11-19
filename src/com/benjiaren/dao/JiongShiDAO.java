@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-
 import com.benjiaren.bean.Geo;
 import com.benjiaren.bean.JiongShi;
 import com.benjiaren.bean.Pic;
@@ -21,6 +20,7 @@ import com.benjiaren.util.SQLDATE;
  * @author xuzhiguang
  *
  */
+
 public class JiongShiDAO {
 	private Connection conn;
 	private PreparedStatement ptst;
@@ -31,6 +31,136 @@ public class JiongShiDAO {
 		try{
 			ptst = conn.prepareStatement("select jsid,created_at,text,a.username,longitude,latitude," +
 					"reposts_count,comments_count,attitudes_count,mievel,pic_urls,email from ofjiongshi a , ofuser b where a.username = b.username");
+			rs = ptst.executeQuery();
+			while(rs.next()){
+				JiongShi js = new JiongShi();
+				js.setId(rs.getInt("jsid"));
+				js.setCreated_at(rs.getDate("created_at"));
+				js.setText(rs.getString("text"));
+				User user = new User();
+				user.setName(rs.getString("username"));
+				user.setEmail(rs.getString("email"));
+				js.setUser(user);
+				Geo geo = new Geo();
+				geo.setLongitude(rs.getString("longitude"));
+				geo.setLatitude(rs.getString("latitude"));
+				js.setGeo(geo);
+				js.setReposts_count(rs.getInt("reposts_count"));
+				js.setComments_count(rs.getInt("comments_count"));
+				js.setAttitudes_count(rs.getInt("attitudes_count"));
+				js.setMievel(rs.getInt("mievel"));
+				List<Pic> piclist = new PicDAO().getListPic(rs.getInt("jsid"));
+				if(piclist.size() > 0){
+				js.setPic_urls(piclist);
+				}
+				
+				list.add(js);
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			this.getLog(e.getMessage());
+
+		}finally{
+			this.close();
+		}
+		
+		return list;
+	}
+	
+	public List<JiongShi> getJiongshiByUserName(String username){
+		conn = DBConn.getConnect();
+		List<JiongShi> list = new ArrayList<JiongShi>();
+		try{
+			ptst = conn.prepareStatement("select jsid,created_at,text,a.username,longitude,latitude," +
+					"reposts_count,comments_count,attitudes_count,mievel,pic_urls,email from ofjiongshi a , ofuser b where a.username = b.username and a.username = ?");
+			ptst.setString(1, username);
+			rs = ptst.executeQuery();
+			while(rs.next()){
+				JiongShi js = new JiongShi();
+				js.setId(rs.getInt("jsid"));
+				js.setCreated_at(rs.getDate("created_at"));
+				js.setText(rs.getString("text"));
+				User user = new User();
+				user.setName(rs.getString("username"));
+				user.setEmail(rs.getString("email"));
+				js.setUser(user);
+				Geo geo = new Geo();
+				geo.setLongitude(rs.getString("longitude"));
+				geo.setLatitude(rs.getString("latitude"));
+				js.setGeo(geo);
+				js.setReposts_count(rs.getInt("reposts_count"));
+				js.setComments_count(rs.getInt("comments_count"));
+				js.setAttitudes_count(rs.getInt("attitudes_count"));
+				js.setMievel(rs.getInt("mievel"));
+				List<Pic> piclist = new PicDAO().getListPic(rs.getInt("jsid"));
+				if(piclist.size() > 0){
+				js.setPic_urls(piclist);
+				}
+				
+				list.add(js);
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			this.getLog(e.getMessage());
+
+		}finally{
+			this.close();
+		}
+		
+		return list;
+	}
+	
+	public List<JiongShi> getJiongshiByCount(int count){
+		conn = DBConn.getConnect();
+		List<JiongShi> list = new ArrayList<JiongShi>();
+		try{
+			ptst = conn.prepareStatement("select jsid,created_at,text,a.username,longitude,latitude," +
+					"reposts_count,comments_count,attitudes_count,mievel,pic_urls,email from ofjiongshi a , ofuser b where a.username = b.username limit 0,?");
+			ptst.setInt(1, count);
+			rs = ptst.executeQuery();
+			while(rs.next()){
+				JiongShi js = new JiongShi();
+				js.setId(rs.getInt("jsid"));
+				js.setCreated_at(rs.getDate("created_at"));
+				js.setText(rs.getString("text"));
+				User user = new User();
+				user.setName(rs.getString("username"));
+				user.setEmail(rs.getString("email"));
+				js.setUser(user);
+				Geo geo = new Geo();
+				geo.setLongitude(rs.getString("longitude"));
+				geo.setLatitude(rs.getString("latitude"));
+				js.setGeo(geo);
+				js.setReposts_count(rs.getInt("reposts_count"));
+				js.setComments_count(rs.getInt("comments_count"));
+				js.setAttitudes_count(rs.getInt("attitudes_count"));
+				js.setMievel(rs.getInt("mievel"));
+				List<Pic> piclist = new PicDAO().getListPic(rs.getInt("jsid"));
+				if(piclist.size() > 0){
+				js.setPic_urls(piclist);
+				}
+				
+				list.add(js);
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			this.getLog(e.getMessage());
+
+		}finally{
+			this.close();
+		}
+		
+		return list;
+	}
+	
+	public List<JiongShi> getJiongshiByStartStop(int start,int stop){
+		conn = DBConn.getConnect();
+		List<JiongShi> list = new ArrayList<JiongShi>();
+		try{
+			ptst = conn.prepareStatement("select jsid,created_at,text,a.username,longitude,latitude," +
+					"reposts_count,comments_count,attitudes_count,mievel,pic_urls,email from ofjiongshi a , ofuser b where a.username = b.username limit ?,?");
+			ptst.setInt(1, start);
+			ptst.setInt(2, stop);
 			rs = ptst.executeQuery();
 			while(rs.next()){
 				JiongShi js = new JiongShi();

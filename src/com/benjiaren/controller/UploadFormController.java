@@ -45,7 +45,6 @@ public class UploadFormController {
         	String uuid = UUID.randomUUID().toString();
         	String type = originalFileName.substring(originalFileName.lastIndexOf("."));
         	String fileName = uuid+type;
-        	Log.log("upload------------------------------"+fileName);
             FileOutputStream fileOutputStream=new FileOutputStream(file+File.separator+fileName);
             fileOutputStream.write(multipartFile.getBytes());
             fileOutputStream.flush();
@@ -54,7 +53,7 @@ public class UploadFormController {
             
             Pic pic = new Pic();
             pic.setJiongshiid(ijsid);
-            pic.setPicAdd(file+File.separator+fileName);
+            pic.setPicAdd("http://127.0.0.1:8080/jscxfweb/upload/"+fileName);
             pic.setPicName(originalFileName);
             pic.setPicNameNew(fileName);
             pic.setUuid(uuid);

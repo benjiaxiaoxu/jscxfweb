@@ -18,7 +18,16 @@ public class JiongShiServiceImpl implements JiongShiService{
 	
 	public JiongShiList findUserByName(String username) {
 		// TODO Auto-generated method stub
-		return null;
+		JiongShiList jsll = new JiongShiList();
+		List<JiongShi> list = new JiongShiDAO().getJiongshiByUserName(username);
+		List<JiongShi> listj = new ArrayList<JiongShi>();
+		System.out.println(list.size());
+		for(JiongShi js : list){
+			js.setComments(new CommentsDAO().getCommentsByUsernameANDJiongshiId(js.getUser().getName(), js.getId()));
+			listj.add(js);
+		}
+		jsll.setJiongshi(listj);
+		return jsll;
 	}
 
 
@@ -105,15 +114,33 @@ public class JiongShiServiceImpl implements JiongShiService{
 	
 	public JiongShiList findALLJiongShiByCount(int count) {
 		// TODO Auto-generated method stub
-		return null;
-	}
+		JiongShiList jsll = new JiongShiList();
+		List<JiongShi> list = new JiongShiDAO().getJiongshiByCount(count);
+		List<JiongShi> listj = new ArrayList<JiongShi>();
+		System.out.println(list.size());
+		for(JiongShi js : list){
+			js.setComments(new CommentsDAO().getCommentsByUsernameANDJiongshiId(js.getUser().getName(), js.getId()));
+			listj.add(js);
+		}
+		jsll.setJiongshi(listj);
+		return jsll;	
+		}
 
 
 	
 	public JiongShiList findALLJiongShiByStartStop(int start, int stop) {
 		// TODO Auto-generated method stub
-		return null;
-	}
+		JiongShiList jsll = new JiongShiList();
+		List<JiongShi> list = new JiongShiDAO().getJiongshiByStartStop(start, stop);
+		List<JiongShi> listj = new ArrayList<JiongShi>();
+		System.out.println(list.size());
+		for(JiongShi js : list){
+			js.setComments(new CommentsDAO().getCommentsByUsernameANDJiongshiId(js.getUser().getName(), js.getId()));
+			listj.add(js);
+		}
+		jsll.setJiongshi(listj);
+		return jsll;	
+		}
 
 
 }

@@ -29,7 +29,10 @@ public class DBConn {
 		}
 	    return null;
 	}
+	
+	public static void main(String[] args) {
+		DBConn.getConnect();
+	}
 
-
-   
+ 
 }

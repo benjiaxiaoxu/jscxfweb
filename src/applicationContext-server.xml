@@ -25,7 +25,7 @@
 	<bean id="restJiongshi" class="com.benjiaren.service.impl.JiongShiServiceImpl"/>
 	<bean id="restComment" class="com.benjiaren.service.impl.CommentServiceImpl"/>
 	
-	
+		
 	
 	<jaxrs:server id="restServiceContainer" address="/service">
     	<jaxrs:serviceBeans>
